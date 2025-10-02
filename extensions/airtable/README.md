@@ -11,6 +11,38 @@ The Airtable Extension requires a Personal Access Token to authenticate with the
 
 ## Nodes
 
+### Insert Record
+
+Inserts a new record into an Airtable table.
+
+**Configuration:**
+- **Airtable Connection**: The connection configured with your Personal Access Token
+- **Base ID**: The Airtable base ID (found in the URL after 'app', e.g., 'appABC123')
+- **Table Name**: The name of the table to insert into
+- **Record Fields**: JSON object containing the field names and values for the new record
+- **Storage Options**: Choose where to store the result (Input or Context)
+
+**Output Format (Success):**
+```json
+{
+  "success": true,
+  "record": {...}, // The created Airtable record with all fields
+  "id": "recXXXXXXXXXXXXXX", // The ID of the newly created record
+  "createdTime": "2024-01-15T10:30:00.000Z" // Timestamp of creation
+}
+```
+
+**Output Format (Error):**
+```json
+{
+  "success": false,
+  "error": true,
+  "message": "Error description",
+  "status": 422,
+  "type": "INVALID_REQUEST_BODY"
+}
+```
+
 ### Get All Records
 
 Retrieves multiple records from an Airtable table with optional filtering and sorting.
@@ -84,7 +116,22 @@ Retrieves exactly one record based on a search criteria. This node has multiple 
 
 ## Usage Examples
 
-### Example 1: Get All Customers
+### Example 1: Insert a New Customer
+- **Base ID**: `appABC123XYZ`
+- **Table Name**: `Customers`
+- **Record Fields**:
+```json
+{
+  "Name": "John Doe",
+  "Email": "john@example.com",
+  "Status": "Active",
+  "Sign-up Date": "2024-01-15"
+}
+```
+
+This will create a new customer record with the specified fields.
+
+### Example 2: Get All Customers
 - **Base ID**: `appABC123XYZ`
 - **Table Name**: `Customers`
 - **Filter Formula**: `{Status} = 'Active'`
